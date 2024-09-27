@@ -35,41 +35,27 @@
   libsecret,
   clutter,
   cairo,
-}: let
-  fedoraPatches = [
-    {
-      filename = "webkit-qtwebkit-23-no_rpath.patch";
-      hash = "sha256-4KFAQLIhdfTGx6JjZJT4W8wH+F3zctWOqZdKu8jDR8s=";
-    }
-    {
-      filename = "webkit-qtwebkit-23-gcc5.patch";
-      hash = "sha256-WCnTm7QuMoLsIDCv6Kz8eTL1c8vET4hYiL2olVOW/gw=";
-    }
-    {
-      filename = "qtwebkit-bison-3.7.patch";
-      hash = "sha256-B/DmezLWxwLgWLKnTGN4ELw9W+DA+/hHFJf1Ah0HHAQ=";
-    }
-    {
-      filename = "webkit-qtwebkit-23-glib2.patch";
-      hash = "sha256-pmIb1beAwnlcATi1VqMDkv2/BzyS9wRd3h64BYXmoBw=";
-    }
-  ];
-  patches = map (patchstuff: fetchpatch {
-    name = patchstuff.filename;
-    url = "https://src.fedoraproject.org/rpms/qtwebkit/raw/rawhide/f/${patchstuff.filename}";
-    inherit (patchstuff) hash;
-  }) fedoraPatches;
-in
+}: 
 stdenv.mkDerivation (finalAttrs: {
   name = "qtwebkit";
   version = "2.3.4";
 
   src = fetchurl {
-    url = "https://download.kde.org/Attic/qtwebkit-2.3/2.3.4/src/qtwebkit-2.3.4.tar.gz";
+    urls = [
+      "https://src.fedoraproject.org/repo/pkgs/qtwebkit/qtwebkit-2.3.4.tar.gz/42ef76d0cf7d0c611ef83418e9f297ff/qtwebkit-2.3.4.tar.gz"
+      "https://download.kde.org/Attic/qtwebkit-2.3/2.3.4/src/qtwebkit-2.3.4.tar.gz"
+      "https://mirrors.mit.edu/kde/Attic/qtwebkit-2.3/2.3.4/src/qtwebkit-2.3.4.tar.gz"
+      "https://mirror.twds.com.tw/kde/Attic/qtwebkit-2.3/2.3.4/src/qtwebkit-2.3.4.tar.gz"
+    ];
     hash = "sha256-xs+p0Gj36wJP7j9sJPW4tyaZf2aQB1h/Ne1Kl9QAl8o=";
   };
   sourceRoot = ".";
-  inherit patches;
+  patches = [
+    ./webkit-qtwebkit-23-no_rpath.patch
+    ./webkit-qtwebkit-23-gcc5.patch
+    ./qtwebkit-bison-3.7.patch
+    ./webkit-qtwebkit-23-glib2.patch
+  ];
 
   nativeBuildInputs = [
     cmake
