@@ -149,8 +149,6 @@ stdenv.mkDerivation (finalAttrs: {
     runHook postFixup
   '';
 
-  # enableParallelBuilding = false;
-  hardeningDisable = [ "all" ];
   NIX_CFLAGS_COMPILE = let
     no_errors = [
       "deprecated-copy"
