@@ -4,7 +4,31 @@ This is a flake that builds qtwebkit 2.3.4 (the last version that supported Qt4)
 
 Note that qtwebkit 2.3.4 is very old, unmaintained, and has many known security vulnerabilities. It should not be pointed at the public internet.
 
-# License
+## How to use
+
+Build directly:
+
+`nix build github:shelvacu/qtwebkit23-flake`
+
+Add as overlay:
+
+```nix
+{
+  # Qt4 was removed in 22.11
+  inputs.nixpkgs.url = "nixpkgs/nixos-22.05";
+  inputs.qtwebkit23 = {
+    url = "github:shelvacu/qtwebkit23-flake";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+  # ...
+}
+# in nixos config
+{ inputs, ...}: {
+  nixpkgs.overlays = [ inputs.qtwebkit23.overlays.default ];
+}
+```
+
+## License
 
 This work is partially derived from [fedora's build package](https://src.fedoraproject.org/rpms/qtwebkit/blob/rawhide/f/qtwebkit.spec) and depends on nixpkgs, Qt, WebKit, and other projects which each have their own license.
 
