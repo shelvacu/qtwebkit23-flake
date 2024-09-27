@@ -157,5 +157,5 @@ stdenv.mkDerivation (finalAttrs: {
       "nonnull" #!!!
       "implicit-fallthrough"
     ];
-  in (map (e: "-Wno-error=${e}") no_errors) ++ [ "-w" ];
+  in (map (e: "-Wno-${e}") no_errors);
 })
