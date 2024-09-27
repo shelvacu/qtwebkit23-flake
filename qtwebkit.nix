@@ -19,7 +19,6 @@
   gtk-doc,
   icu,
   which,
-  fetchpatch,
 
   fontconfig,
   libwebp,
@@ -51,7 +50,6 @@ stdenv.mkDerivation (finalAttrs: {
   };
   sourceRoot = ".";
   patches = [
-    ./webkit-qtwebkit-23-no_rpath.patch
     ./webkit-qtwebkit-23-gcc5.patch
     ./qtwebkit-bison-3.7.patch
     ./webkit-qtwebkit-23-glib2.patch
