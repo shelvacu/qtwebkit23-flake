@@ -102,13 +102,6 @@ stdenv.mkDerivation (finalAttrs: {
   QTDIR = qt48;
   preConfigure = ''
     export QMAKEPATH=$PWD/Tools/qmake
-
-    ./autogen.sh \
-      --enable-geolocation=no \
-      --enable-video=no \
-      --enable-web-audio=no \
-      --enable-webkit2=no \
-      --with-gtk=2.0
   '';
 
   # thank you so much fedora https://src.fedoraproject.org/rpms/qtwebkit/blob/rawhide/f/qtwebkit.spec
